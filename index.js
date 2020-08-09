@@ -29,6 +29,7 @@ const { nextISSTimesForMyLocation } = require('./iss');
 //   console.log('It worked! Returned Coords:' , riseNdur);
 // });
 
+//loops through the data objects to print out the string
 const printPassTimes = function(passTimes) {
   for (const pass of passTimes) {
     const datetime = new Date(0);

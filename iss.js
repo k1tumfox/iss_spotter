@@ -59,7 +59,7 @@ const fetchISSFlyOverTimes = (coords, callback) => {
   });
 
 };
-
+//each of our 3 functions takes an error obj as 1st argument
 const nextISSTimesForMyLocation = (callback) => {
   fetchMyIP((error, ip) => {
     if (error) {
