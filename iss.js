@@ -5,7 +5,7 @@ const request = require('request');
 //  * - A callback (to pass back an error or the IP string)
 //  * - Returns (via Callback):
 //  *     - An error, if any (nullable)
-//  *     - The IP address as a string (null if error). 
+//  *     - The IP address as a string (null if error).
 
 const fetchMyIP = (callback) => {
   request('https://api.ipify.org/?format=json', (error, response, body) => {
@@ -39,13 +39,28 @@ const fetchCoordsByIP = (ip, callback) => {
   });
 };
 
-//to read the API output as object
-// request(`https://ipvigilante.com/70.54.64.15`, (error, response, body) => {
-//   const ipInfo1 = JSON.parse(body).data.latitude;
-//   const ipInfo2 = JSON.parse(body).data.longitude;
-//   console.log(ipInfo1, ipInfo2);
-// });
+// The fly over times as an array of objects (null if error). Example:
+//  *     [ { risetime: 134564234, duration: 600 }, ... ]
+const fetchISSFlyOverTimes = (coords, callback) => {
+  request(`http://api.open-notify.org/iss-pass.json?lat=${coords.latitude}&lon=${coords.longitude}`, (error, response, body) => {
+
+    if (error) {
+      callback(error, null);
+      return;
+    }
+
+    if (response.statusCode !== 200) {
+      callback(Error(`Status Code ${response.statusCode} when fetching ISS pass times: ${body}`), null);
+      return;
+    }
+
+    const passes = JSON.parse(body).response;
+    callback(null, passes);
+  });
+
+};
 
 
-module.exports = { fetchMyIP };
-module.exports = { fetchCoordsByIP };
+// module.exports = { fetchMyIP };
+// module.exports = { fetchCoordsByIP };
+module.exports = { fetchISSFlyOverTimes };
