@@ -53,3 +53,5 @@ nextISSTimesForMyLocation((error, passTimes) => {
 //   { duration: 608, risetime: 1597002581 },
 //   { duration: 646, risetime: 1597008407 },
 //   { duration: 630, risetime: 1597014220 } ]
+
+module.exports = { printPassTimes };
